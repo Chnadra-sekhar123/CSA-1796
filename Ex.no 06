@@ -1,0 +1,31 @@
+class VacuumCleaner:
+    def __init__(self):
+        self.location = 0  
+
+    def clean(self):
+        print(f"Cleaning at position {self.location}")
+    
+    def move_right(self):
+        print("Moving right.")
+        self.location = 1
+
+    def move_left(self):
+        print("Moving left.")
+        self.location = 0
+
+    def is_dirty(self):
+        return True if self.location == 0 else False
+
+def main():
+    vacuum = VacuumCleaner()
+    
+    for _ in range(2):  
+        if vacuum.is_dirty():
+            vacuum.clean()
+        if vacuum.location == 0:
+            vacuum.move_right()
+        else:
+            vacuum.move_left()
+
+if __name__ == "__main__":
+    main()
