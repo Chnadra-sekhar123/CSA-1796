@@ -1,0 +1,13 @@
+from itertools import permutations
+def solve_cryptarithmetic():
+    for perm in permutations('0123456789', 9):
+        s, e, n, d, h,m, o, r, y = perm
+        if s == '0' or m == '0':
+            continue
+        send = int(s + e + n + d)
+        more = int(m + o + r + e)
+        honey = int(h+ o + n + e + y)
+        if send + more == honey:
+            return f"SEND: {send}, MORE: {more}, HONEY: {honey}"
+    return "No solution found"
+print(solve_cryptarithmetic())
