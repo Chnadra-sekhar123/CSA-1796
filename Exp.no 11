@@ -1,0 +1,44 @@
+def is_valid_assignment(adjacent, assignment, region, color):
+    for neighbor in adjacent[region]:
+        if neighbor in assignment and assignment[neighbor] == color:
+            return False
+    return True
+
+def backtracking_search(adjacent, regions, colors, assignment):
+    if len(assignment) == len(regions):
+        return assignment  
+    region = next(iter(set(regions) - set(assignment)))
+    for color in colors:
+        if is_valid_assignment(adjacent, assignment, region, color):
+            assignment[region] = color
+            result = backtracking_search(adjacent, regions, colors, assignment)
+            if result is not None:
+                return result
+            del assignment[region]
+
+    return None  
+
+def map_coloring(adjacent, colors):
+    regions = list(adjacent.keys())
+    assignment = backtracking_search(adjacent, regions, colors, {})
+    return assignment
+
+adjacent_regions = {
+    'WA': ['NT', 'SA'],
+    'NT': ['WA', 'SA', 'Q'],
+    'SA': ['WA', 'NT', 'Q', 'NSW', 'V'],
+    'Q': ['NT', 'SA', 'NSW'],
+    'NSW': ['Q', 'SA', 'V'],
+    'V': ['SA', 'NSW']
+}
+
+available_colors = ['Red', 'Green', 'Blue']
+
+result = map_coloring(adjacent_regions, available_colors)
+
+if result:
+    print("Map coloring assignment:")
+    for region, color in result.items():
+        print(f"{region}: {color}")
+else:
+    print("No valid map coloring assignment found.")
